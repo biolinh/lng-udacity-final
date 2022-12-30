@@ -9,7 +9,7 @@ variables:
   azureServiceConnectionId: 'DevopsServiceConnection'
   projectRoot: $(System.DefaultWorkingDirectory)
   environmentName: 'test'
-  poolName: 'devops-pool'
+  poolName: 'VMAgent'
   appName: 'devops-azure-app-service'
 
 pool: 

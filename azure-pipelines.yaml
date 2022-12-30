@@ -26,13 +26,13 @@ stages:
     #--------------------------------------------#  
     # Use Terraform to create the Infrastructure      
     # Install Terraform on the pipeline agent 
-    - task: TerraformInstaller
+    - task: TerraformInstaller@0
       displayName: 'Terrafom installation'
       inputs:
         terraformVersion: '$(terraformVersion)'
     
     # Run Terraform Init on the pipeline agent 
-    - task: TerraformCLI
+    - task: TerraformCLI@0
       displayName: 'Terraform init'
       inputs:
         provider: 'azurerm'
@@ -44,14 +44,14 @@ stages:
         backendAzureRmContainerName: 'tfstate'
         backendAzureRmKey: 'test.terraform.tfstate'
    
-    - task: TerraformCLI
+    - task: TerraformCLI@0
       displayName: 'Terraform validate'
       inputs:
         provider: 'azurerm'
         command: 'validate'
     
     # Run Terraform Apply
-    - task: TerraformCLI
+    - task: TerraformCLI@0
       displayName: Terraform apply
       inputs:
         provider: 'azurerm'

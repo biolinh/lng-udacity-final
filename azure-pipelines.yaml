@@ -128,7 +128,7 @@ stages:
     displayName: Deploy VM and execute Selenium tests
     workspace:
       clean: all
-    environment:
+    parameters:
       name: '$(environmentName)'
       resourceType: VirtualMachine
       tags: selenium

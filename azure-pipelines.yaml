@@ -10,7 +10,7 @@ variables:
   projectRoot: $(System.DefaultWorkingDirectory)
   environmentName: 'test'
   poolName: 'LinuxAgent'
-  appName: 'devops-azure-app-service'
+  appName: 'lng-udacity-final-AppService'
 
 pool: 
   name: '$(poolName)'

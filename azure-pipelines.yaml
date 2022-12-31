@@ -233,8 +233,6 @@ stages:
           echo '-------> Cleanning old data...'
           rm -rf tests
           echo '-------> Cleanned old data'
-          export PATH=/home/hiepnd/jmeter/bin:$PATH
-          echo '-------> path with jmeter:' $PATH
           echo '-------> create jmeter stress test ...'
           jmeter -n -t stress-test.jmx \
             -l logs/stress-test-output.csv \

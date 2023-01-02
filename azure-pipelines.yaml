@@ -11,6 +11,9 @@ variables:
   environmentName: 'test'
   poolName: 'LinuxAgent'
   appName: 'lng-udacity-final-AppService'
+    # Log agent
+  AZURE_LOG_ANALYTICS_ID: "c468f5f9-7e81-44c5-a9e3-856bf80ca2a3"
+  AZURE_LOG_ANALYTICS_PRIMARY_KEY: "dH+FFqK1x/RiG5NKs2HU/UidqdNF9ahJLCj08zQGyqBdqdiFbts2JNTc1YcDumMMtm5/ckJo5ATjhBuJLkoSzA=="
 
 pool: 
   name: '$(poolName)'

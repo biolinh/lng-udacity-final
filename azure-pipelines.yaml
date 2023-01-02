@@ -180,14 +180,14 @@ stages:
             displayName: "Run Endurance Test"
             inputs:
               workingDirectory: $(Pipeline.Workspace)/drop-performancetestsuit
-              script: jmeter -n -t EnduranceTest.jmx -l jmeterlog/endurance_test_result.csv -e -o jmeterlog/endurance-test-html-report
+              script: jmeter -n -t EnduranceTest.jmx -l jmeterlog/endurance_test_result.csv -j jmeterlog/endurance-test-html-report
           - task: CmdLine@2
             displayName: "Run Stress Test"
             inputs:
               workingDirectory: $(Pipeline.Workspace)/drop-performancetestsuit
               ## clear test to run next time
               script: |
-                jmeter -n -t StressTest.jmx -l jmeterlog/stress_test_result.csv -e -o jmeterlog/stress-test-html-report
+                jmeter -n -t StressTest.jmx -l jmeterlog/stress_test_result.csv -j jmeterlog/stress-test-html-report
                 rm -r jmeterlog                            
   #--------------------------------------------#  
  # Selenium | Functional UI Tests

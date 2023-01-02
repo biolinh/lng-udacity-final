@@ -10,7 +10,7 @@ variables:
   projectRoot: $(System.DefaultWorkingDirectory)
   environmentName: 'test'
   poolName: 'LinuxAgent'
-  appName: 'devops-azure-app-service'
+  appName: 'lng-udacity-final-AppService'
 
 pool: 
   name: '$(poolName)'
@@ -40,7 +40,7 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
         backendServiceArm: '$(azureServiceConnectionId)'
         backendAzureRmResourceGroupName: 'Azuredevops'
-        backendAzureRmStorageAccountName: 'tfstate2032023938'
+        backendAzureRmStorageAccountName: 'tfstate3095828028'
         backendAzureRmContainerName: 'tfstate'
         backendAzureRmKey: 'test.terraform.tfstate'
    
@@ -60,38 +60,38 @@ stages:
         environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
 
     #--------------------------------------------#    
-    # Postman - Install Newman    
+      # Postman - Install Newman    
+      # ToDo: Update the command and verify the working directory
+    - task: CmdLine@2
+      displayName: Install Newman
+      inputs:
+        script: "sudo npm install -g newman"
+        workingDirectory: $(System.DefaultWorkingDirectory)   
+    # Postman Data Validation Test Suite
+    # ToDo: Verify the working directory and the newman scripts
+    - task: CmdLine@2
+      displayName: Run Data Validation Tests
+      continueOnError: true
+      inputs:
+        script: newman run ValidationTest.json
+        workingDirectory: "$(System.DefaultWorkingDirectory)/automatedtesting/postman"
+    # Postman Regression Test Suite
     # ToDo: Update the command and verify the working directory
-  - task: CmdLine@2
-    displayName: Install Newman
-    inputs:
-      script: "sudo npm install -g newman"
-      workingDirectory: $(System.DefaultWorkingDirectory)   
-  # Postman Data Validation Test Suite
-  # ToDo: Verify the working directory and the newman scripts
-  - task: CmdLine@2
-    displayName: Run Data Validation Tests
-    continueOnError: true
-    inputs:
-      script: newman run ValidationTest.json
-      workingDirectory: "$(System.DefaultWorkingDirectory)/automatedtesting/postman"
-  # Postman Regression Test Suite
-  # ToDo: Update the command and verify the working directory
-  - task: CmdLine@2
-    displayName: Run Regression Tests
-    continueOnError: true
-    inputs:
-      script: newman run RegressionTest.json
-      workingDirectory: "$(System.DefaultWorkingDirectory)/automatedtesting/postman"
-  # Postman - Publish Results
-  # ToDo: Complete the task as explained here: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/test/publish-test-results?view=azure-devops&tabs=trx%2Cyaml#yaml-snippet
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFormat: "JUnit"
-      testResultsFiles: "**/TEST-*.xml"
-      searchFolder: "$(System.DefaultWorkingDirectory)/automatedtesting/postman/"
-      mergeTestResults: true
-      testRunTitle: "Run regression and validation test"
+    - task: CmdLine@2
+      displayName: Run Regression Tests
+      continueOnError: true
+      inputs:
+        script: newman run RegressionTest.json
+        workingDirectory: "$(System.DefaultWorkingDirectory)/automatedtesting/postman"
+    # Postman - Publish Results
+    # ToDo: Complete the task as explained here: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/test/publish-test-results?view=azure-devops&tabs=trx%2Cyaml#yaml-snippet
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: "JUnit"
+        testResultsFiles: "**/TEST-*.xml"
+        searchFolder: "$(System.DefaultWorkingDirectory)/automatedtesting/postman/"
+        mergeTestResults: true
+        testRunTitle: "Run regression and validation test"
     #--------------------------------------------#
     # Selenium (UI) Test Suite - Archive the package  
     # "ArchiveFiles@2" picks up the web package and archives it.

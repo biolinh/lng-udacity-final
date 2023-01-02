@@ -226,7 +226,7 @@ stages:
                 unzip -o "$(Build.BuildId)-uitests.zip"
                 sudo mkdir -p /var/log/selenium
                 sudo chmod 664 /var/log/selenium
-                sudo python3 login.py | sudo tee -a /var/log/selenium/selenium-test.log
+                sudo python3 $(System.DefaultWorkingDirectory)/automatedtesting/selenium/login.py | sudo tee -a /var/log/selenium/selenium-test.log
                 # copy selenium log file to $(System.DefaultWorkingDirectory)/log/selenium/
                 cd $(System.DefaultWorkingDirectory)
                 mkdir -p log/selenium

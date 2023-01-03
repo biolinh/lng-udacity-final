@@ -175,6 +175,7 @@ stages:
                 wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.tgz -O jmeter.tgz
                 tar xzvf jmeter.tgz
                 sudo apt-get install unzip
+                sudo apt install jmeter
                 unzip -o "$(Build.BuildId)-performancetestsuit.zip"
                 mkdir -p jmeterlog
                 pwd

@@ -223,16 +223,23 @@ stages:
                 wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh
                 sh onboard_agent.sh -w ${AZURE_LOG_ANALYTICS_ID} -s ${AZURE_LOG_ANALYTICS_PRIMARY_KEY}
                 sudo /opt/microsoft/omsagent/bin/service_control restart ${AZURE_LOG_ANALYTICS_ID}
+              workingDirectory: $(System.DefaultWorkingDirectory)
+          - download: current
+            displayName: 'Download selenium tests'
+            artifact: drop-ui-tests
+          - task: Bash@3
+            displayName: 'Execute selenium tests'
+            inputs:
+              targetType: 'inline'
+              script: |            
                 unzip -o $(Pipeline.Workspace)/drop-ui-tests/$(Build.BuildId)-ui-tests.zip -d .
-                sudo mkdir -p /var/logs/selenium
-                sudo chmod 664 /var/logs/selenium
-                mkdir -p $(System.DefaultWorkingDirectory)/log/selenium
-                python3 login.py >> $(System.DefaultWorkingDirectory)/selenium/ui-logs$(Build.BuildId).log
-                sudo cp $(System.DefaultWorkingDirectory)/selenium/ui-logs$(Build.BuildId).log /var/logs/selenium
+                python3 login.py > ui-logs$(Build.BuildId).log
+                sudo mkdir /var/logs
+                sudo mkdir /var/logs/selenium
+                sudo cp ui-logs$(Build.BuildId).log /var/logs/selenium
                 echo '------------> Copy log files to folder log successfully'
                 sudo ls /var/logs/selenium
               workingDirectory: $(System.DefaultWorkingDirectory)
-
           - task: PublishPipelineArtifact@1
             displayName: Publish selenium logs
             inputs:

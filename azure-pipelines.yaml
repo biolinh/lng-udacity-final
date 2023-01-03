@@ -219,10 +219,6 @@ stages:
                 sudo apt-get install -y chromium-chromedriver
                 chromedriver --version
                 pip3 install -U selenium
-                # Install Log Analytics agent on Linux computers (only need to run once)
-                wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh
-                sh onboard_agent.sh -w ${AZURE_LOG_ANALYTICS_ID} -s ${AZURE_LOG_ANALYTICS_PRIMARY_KEY}
-                sudo /opt/microsoft/omsagent/bin/service_control restart ${AZURE_LOG_ANALYTICS_ID}
               workingDirectory: $(System.DefaultWorkingDirectory)
           - download: current
             displayName: 'Download selenium tests'
